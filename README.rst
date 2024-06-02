@@ -689,6 +689,48 @@ the Google homepage. Scripts can cause additional network requests to be
 performed, as well as modify the page or its layout, causing another round of
 page rendering and painting.
 
+Detailed DNS Resolution Process
+
+When a user types a URL like www.google.com and presses Enter, the browser needs to resolve the domain name to an IP address through the DNS (Domain Name System) process. Here's a detailed step-by-step explanation of how DNS resolution works:
+
+1. Browser Cache:
+
+The browser first checks its own cache to see if it has recently resolved the domain. If found, it uses the cached IP address, skipping further resolution steps.
+
+2. Operating System Cache:
+
+If the IP address is not in the browser cache, the browser queries the operating system’s DNS cache. Modern operating systems maintain a cache of DNS queries to speed up the resolution process.
+
+3. Router Cache:
+
+If the IP address is not found in the OS cache, the request is sent to the local router, which may also have a cache of DNS queries.
+
+4. ISP DNS Server:
+
+If the router does not have the information, the request is forwarded to the ISP’s (Internet Service Provider) DNS servers. These servers typically have a larger cache and are the first step in querying authoritative DNS servers if the cache is empty.
+
+5. Recursive DNS Resolution:
+
+If the ISP’s DNS server cannot resolve the domain, it performs recursive resolution:
+Root Name Servers: The ISP DNS server contacts a root name server, which responds with the address of a top-level domain (TLD) name server (.com, .net, etc.).
+TLD Name Servers: The ISP DNS server then queries the TLD name server, which responds with the address of the authoritative name server for the specific domain (google.com).
+Authoritative DNS Servers: Finally, the ISP DNS server queries the authoritative DNS server for google.com, which responds with the IP address of www.google.com.
+
+6. DNS Record Types:
+
+A Record: Maps a domain name to an IPv4 address.
+AAAA Record: Maps a domain name to an IPv6 address.
+CNAME Record: Canonical Name record that maps an alias name to a true or canonical domain name.
+MX Record: Mail Exchange record that directs email to a mail server.
+TXT Record: Used to store text information related to the domain, often for validation purposes.
+
+7. DNS Caching and TTL:
+
+Each DNS record has a TTL (Time-To-Live) value that specifies how long the record should be cached. Once the TTL expires, the record is removed from the cache, and a new DNS resolution process must be performed.
+
+8. DNSSEC:
+
+DNSSEC (Domain Name System Security Extensions) is a suite of specifications used to secure information provided by the DNS. It protects against attacks by signing data to ensure its validity.
 .. _`Creative Commons Zero`: https://creativecommons.org/publicdomain/zero/1.0/
 .. _`"CSS lexical and syntax grammar"`: http://www.w3.org/TR/CSS2/grammar.html
 .. _`Punycode`: https://en.wikipedia.org/wiki/Punycode
@@ -709,3 +751,4 @@ page rendering and painting.
 .. _`downgrade attack`: http://en.wikipedia.org/wiki/SSL_stripping
 .. _`OSI Model`: https://en.wikipedia.org/wiki/OSI_model
 .. _`Spanish`: https://github.com/gonzaleztroyano/what-happens-when-ES
+
